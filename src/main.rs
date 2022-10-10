@@ -1,5 +1,8 @@
 use std::fs;
 
+/// Displays the current directory, like the `ls` command.
+///
+
 fn main() {
     let target = "./";
     let mut files: Vec<String> = Vec::new();    // init Vec
