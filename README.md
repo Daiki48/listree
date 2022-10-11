@@ -1,4 +1,5 @@
 # listree
+
 cli file tree display command
 
 # Install
@@ -7,7 +8,19 @@ cli file tree display command
 $ cargo install listree
 ```
 
-The `listree` command can then be used to display files and directories.
+# Example
+
+```shell
+$ listree
+.git
+.gitignore
+Cargo.lock
+Cargo.toml
+LICENSE
+README.md
+src
+target
+```
 
 # Author
 
