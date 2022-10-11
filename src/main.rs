@@ -1,8 +1,5 @@
 use std::fs;
 
-/// Displays the current directory, like the `ls` command.
-///
-
 fn main() {
     let target = "./";
     let mut files: Vec<String> = Vec::new();    // init Vec
@@ -27,7 +24,7 @@ fn main() {
             if joined == String::new() {
                 s.to_string()
             } else {
-                joined + " " + s
+                joined + "\n" + s
             }
         });
     println!("{}", strings);
