@@ -3,33 +3,40 @@ use std::fs;
 use std::io;
 
 fn main() -> io::Result<()> {
-    let current_path = env::current_dir()?;
-    println!("{}", current_path.display());
-    let target = "./";
-    let mut files: Vec<String> = Vec::new(); // init Vec
+    let current_path: std::path::PathBuf = env::current_dir()?;
+    println!("Current directory : {}", current_path.display());
+    let target: &str = "./";
+    let mut files: Vec<String> = Vec::new();
 
-    // Store in vec
-    for path in fs::read_dir(target).unwrap() {
-        files.push(
-            path.unwrap()
-                .path()
-                .display()
-                .to_string()
-                .replacen(target, "", 1),
-        )
+    match fs::read_dir(target) {
+        Ok(paths) => {
+            for path in paths {
+                match path {
+                    Ok(dir_entry) => files.push(
+                        dir_entry
+                            .path()
+                            .display()
+                            .to_string()
+                            .replacen(target, "", 1),
+                    ),
+                    Err(e) => println!("Error reading directory entry : {}", e),
+                }
+            }
+        }
+        Err(e) => println!("Error reading directory : {}", e),
     }
 
-    // sorting
     files.sort();
 
-    // Converts from vec to String
-    let strings = files.iter().fold(String::new(), |joined, s| {
-        if joined == String::new() {
-            s.to_string()
-        } else {
-            joined + "\n" + s
-        }
-    });
+    let strings: String = files
+        .iter()
+        .fold(String::new(), |joined: String, s: &String| {
+            if joined == String::new() {
+                s.to_string()
+            } else {
+                joined + "\n" + s
+            }
+        });
     println!("{}", strings);
     Ok(())
 }
